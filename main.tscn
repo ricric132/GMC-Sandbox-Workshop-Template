@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cjom6frcsnwo3"]
+
+[ext_resource type="Script" uid="uid://dj6ntwbt01d7n" path="res://building_manager.gd" id="1_ig7tw"]
+[ext_resource type="Resource" uid="uid://c5ngv8gp463gr" path="res://House/House.tres" id="2_0xm2m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ieq10"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ieq10"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mfvo"]
+albedo_color = Color(0.85626125, 0, 0.14309767, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ieq10"]
+material = SubResource("StandardMaterial3D_6mfvo")
+
+[node name="Node3D" type="Node3D" unique_id=1898332623]
+
+[node name="Floor" type="Node3D" parent="." unique_id=1346193798]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=517115187]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=2088395410]
+shape = SubResource("BoxShape3D_ieq10")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1697124571]
+mesh = SubResource("BoxMesh_ieq10")
+
+[node name="Corner" type="Node3D" parent="Floor" unique_id=1195548554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.5)
+
+[node name="BuildingManager" type="Node3D" parent="." unique_id=1381809741]
+script = ExtResource("1_ig7tw")
+selected_building = ExtResource("2_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1629793288]
+transform = Transform3D(1, 0, 0, 0, 0.72627497, 0.68740433, 0, -0.68740433, 0.72627497, -2.1610198, 10.198151, 14.727161)
+
+[node name="Preview" type="Node3D" parent="." unique_id=762082281]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=793491283]
+mesh = SubResource("SphereMesh_ieq10")
+
+[node name="BuildingParent" type="Node3D" parent="." unique_id=513960177]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1263889225]
+transform = Transform3D(0.835241, 0.549884, 0, -0.4025308, 0.6114203, 0.68127394, 0.37462166, -0.56902796, 0.73202854, 0, 11.225536, 0)

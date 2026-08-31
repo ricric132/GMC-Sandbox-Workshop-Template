@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b3um85wd37k3r"]
+
+[ext_resource type="PackedScene" uid="uid://bxkfd7j5fk1s0" path="res://Buildings/Windmill/Windmill.glb" id="1_e18gu"]
+
+[node name="Windmill" type="Node3D" unique_id=949111744]
+
+[node name="Visual" parent="." unique_id=838304361 instance=ExtResource("1_e18gu")]

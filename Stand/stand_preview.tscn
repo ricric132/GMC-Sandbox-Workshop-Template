@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dicpv56tyl67c"]
+
+[ext_resource type="Script" uid="uid://bvc2eubio3g51" path="res://building_preview.gd" id="1_kdy3c"]
+[ext_resource type="PackedScene" uid="uid://dr25iq251fje2" path="res://Buildings/Stand/StandPreviewRed.glb" id="2_5450n"]
+[ext_resource type="PackedScene" uid="uid://bsweip4a008s1" path="res://Buildings/Stand/StandPreviewBlue.glb" id="3_4mbea"]
+
+[node name="StandPreview" type="Node3D" unique_id=20956432 node_paths=PackedStringArray("valid_preview", "invalid_preview")]
+script = ExtResource("1_kdy3c")
+valid_preview = NodePath("StandPreviewBlue")
+invalid_preview = NodePath("StandPreviewRed")
+
+[node name="StandPreviewRed" parent="." unique_id=365670111 instance=ExtResource("2_5450n")]
+visible = false
+
+[node name="StandPreviewBlue" parent="." unique_id=564648691 instance=ExtResource("3_4mbea")]
+visible = false

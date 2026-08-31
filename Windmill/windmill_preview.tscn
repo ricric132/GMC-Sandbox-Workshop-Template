@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://x454rrame6fo"]
+
+[ext_resource type="Script" uid="uid://bvc2eubio3g51" path="res://building_preview.gd" id="1_6gmus"]
+[ext_resource type="PackedScene" uid="uid://2pyywcfchirl" path="res://Buildings/Windmill/WindmillPreviewBlue.glb" id="2_p1tf8"]
+[ext_resource type="PackedScene" uid="uid://du0ut0mrrldvk" path="res://Buildings/Windmill/WindmillPreviewRed.glb" id="3_5wqx7"]
+
+[node name="WindmillPreview" type="Node3D" unique_id=20956432 node_paths=PackedStringArray("valid_preview", "invalid_preview")]
+script = ExtResource("1_6gmus")
+valid_preview = NodePath("WindmillPreviewBlue")
+invalid_preview = NodePath("WindmillPreviewRed")
+
+[node name="WindmillPreviewBlue" parent="." unique_id=171226488 instance=ExtResource("2_p1tf8")]
+visible = false
+
+[node name="WindmillPreviewRed" parent="." unique_id=340561409 instance=ExtResource("3_5wqx7")]
+visible = false

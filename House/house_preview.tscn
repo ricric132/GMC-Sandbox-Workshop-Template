@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cnrnvoo40lcf0"]
+
+[ext_resource type="Script" uid="uid://bvc2eubio3g51" path="res://building_preview.gd" id="1_55fos"]
+[ext_resource type="PackedScene" uid="uid://qwklxo3pp56n" path="res://Buildings/House/HousePreviewBlue.glb" id="2_1l6gj"]
+[ext_resource type="PackedScene" uid="uid://rbcnsmbflv74" path="res://Buildings/House/HousePreviewRed.glb" id="3_jetvx"]
+
+[node name="HousePreview" type="Node3D" unique_id=20956432 node_paths=PackedStringArray("valid_preview", "invalid_preview")]
+script = ExtResource("1_55fos")
+valid_preview = NodePath("HousePreviewBlue")
+invalid_preview = NodePath("HousePreviewRed")
+
+[node name="HousePreviewBlue" parent="." unique_id=2065462858 instance=ExtResource("2_1l6gj")]
+visible = false
+
+[node name="HousePreviewRed" parent="." unique_id=1708619431 instance=ExtResource("3_jetvx")]
+visible = false

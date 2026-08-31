@@ -1,0 +1,8 @@
+res://main.tscn
+res://building_manager.gd
+res://grid_tile.gd
+res://building_template.gd
+res://Stand/stand.tscn
+res://Stand/Stand.tres
+res://House/house.tscn
+res://House/House.tres
