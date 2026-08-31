@@ -2,6 +2,27 @@
 
 [ext_resource type="PackedScene" uid="uid://c476wjrr08dbc" path="res://Buildings/Stand/Stand.glb" id="1_g8jmp"]
 
-[node name="Node3D" type="Node3D" unique_id=1043794834]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mfvo"]
+transparency = 1
+albedo_color = Color(0.20392157, 1, 1, 0.3254902)
 
-[node name="Stand" parent="." unique_id=884115921 instance=ExtResource("1_g8jmp")]
+[sub_resource type="BoxMesh" id="BoxMesh_7aera"]
+material = SubResource("StandardMaterial3D_6mfvo")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7aera"]
+
+[node name="Stand" type="Node3D" unique_id=1043794834]
+
+[node name="Visual" parent="." unique_id=884115921 instance=ExtResource("1_g8jmp")]
+
+[node name="Highlight" type="MeshInstance3D" parent="." unique_id=1036984729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+visible = false
+mesh = SubResource("BoxMesh_7aera")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1609969931]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=101748980]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+shape = SubResource("BoxShape3D_7aera")

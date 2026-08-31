@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://ct3x83vg5y5jm"]
 
-[ext_resource type="Script" uid="uid://carb7fxejnni7" path="res://building_manager.gd" id="1_uu6xs"]
-[ext_resource type="Resource" uid="uid://bk1hvtqcesgc5" path="res://Buildings/House/House.tres" id="2_r0du0"]
+[ext_resource type="Script" uid="uid://csdyarlbu7wdl" path="res://building_manager.gd" id="1_glv2v"]
+[ext_resource type="Resource" uid="uid://cxq2c5mtpmg58" path="res://Buildings/Windmill/windmill.tres" id="2_r0du0"]
 [ext_resource type="Script" uid="uid://cqcm5y0lhlqk8" path="res://camera_controller.gd" id="2_uu6xs"]
-[ext_resource type="Script" uid="uid://c2j4nn22v54ms" path="res://building_template.gd" id="3_3dxm6"]
-[ext_resource type="Resource" uid="uid://dig8tt5470jjn" path="res://Buildings/Stand/stand.tres" id="4_lgr22"]
-[ext_resource type="Resource" uid="uid://cxq2c5mtpmg58" path="res://Buildings/Windmill/windmill.tres" id="5_trn2v"]
+[ext_resource type="Script" uid="uid://c2j4nn22v54ms" path="res://building_template.gd" id="3_fos0i"]
+[ext_resource type="Resource" uid="uid://dig8tt5470jjn" path="res://Buildings/Stand/stand.tres" id="4_3dxm6"]
+[ext_resource type="Resource" uid="uid://06gunfwlb5fk" path="res://Buildings/House/house.tres" id="5_3dxm6"]
+[ext_resource type="PackedScene" uid="uid://okaudtfqkf41" path="res://building_info_panel.tscn" id="7_lgr22"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mfvo"]
 albedo_color = Color(0.6888781, 0.05533915, 0.14458513, 1)
@@ -47,10 +48,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.5)
 
 [node name="BuildingParent" type="Node3D" parent="Grid" unique_id=522585859]
 
-[node name="BuildingManager" type="Node3D" parent="." unique_id=19595411]
-script = ExtResource("1_uu6xs")
-selected_builidng = ExtResource("2_r0du0")
-all_buildings = Array[ExtResource("3_3dxm6")]([ExtResource("2_r0du0"), ExtResource("4_lgr22"), ExtResource("5_trn2v")])
+[node name="BuildingManager" type="Node3D" parent="." unique_id=19595411 node_paths=PackedStringArray("button_container")]
+script = ExtResource("1_glv2v")
+all_buildings = Array[ExtResource("3_fos0i")]([ExtResource("2_r0du0"), ExtResource("4_3dxm6"), ExtResource("5_3dxm6")])
+button_container = NodePath("../CanvasLayer/BuildingButtons")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=85693517]
 transform = Transform3D(-0.1209461, 0.8845558, -0.4504809, 0, 0.45381227, 0.8910973, 0.9926591, 0.10777474, -0.05488683, -19.179245, 14.267918, 0.7531166)
@@ -58,16 +59,28 @@ script = ExtResource("2_uu6xs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=382104145]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=499856202]
+[node name="BuildingButtons" type="VBoxContainer" parent="CanvasLayer" unique_id=499856202]
+visible = false
 custom_minimum_size = Vector2(100, 1000)
 anchors_preset = -1
 anchor_right = 0.177
 anchor_bottom = 0.83000004
-offset_right = 38.095993
-offset_bottom = 104.15997
+offset_left = 2.0
+offset_top = 112.0
+offset_right = 40.095993
+offset_bottom = 574.16
+
+[node name="BuildingInfoPanel" parent="CanvasLayer" unique_id=1820317958 instance=ExtResource("7_lgr22")]
+
+[node name="BuildingToggle" type="Button" parent="CanvasLayer" unique_id=193574463]
+offset_right = 193.0
+offset_bottom = 106.0
+text = "Toggle Building"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1118545412]
 transform = Transform3D(1, 0, 0, 0, 0.47255072, 0.8813035, 0, -0.8813035, 0.47255072, 0, 5.574007, -0.1670742)
 light_color = Color(0.9986643, 0.703808, 0.54965323, 1)
 light_energy = 2.267
 shadow_enabled = true
+
+[connection signal="pressed" from="CanvasLayer/BuildingToggle" to="BuildingManager" method="toggle_buildmode"]

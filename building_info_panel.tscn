@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://okaudtfqkf41"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ieq10"]
+font_size = 64
+
+[node name="BuildingInfoPanel" type="Control" unique_id=1820317958]
+layout_mode = 3
+anchor_left = 0.74200004
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.7840576
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=449905788]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 360.0
+
+[node name="BuildingName" type="Label" parent="." unique_id=922334627]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -1.0
+offset_right = 247.0
+offset_bottom = 87.0
+text = "Name"
+label_settings = SubResource("LabelSettings_ieq10")
+
+[node name="Button" type="Button" parent="." unique_id=1032973807]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 248.0
+offset_right = 259.0
+offset_bottom = 335.0
+text = "Destroy"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
