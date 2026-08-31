@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="building_template" format=3 uid="uid://dig8tt5470jjn"]
+
+[ext_resource type="PackedScene" uid="uid://ioo51co71xpx" path="res://Buildings/Stand/stand.tscn" id="1_s7gdx"]
+[ext_resource type="Script" uid="uid://c2j4nn22v54ms" path="res://building_template.gd" id="2_nm7tn"]
+[ext_resource type="PackedScene" uid="uid://dicpv56tyl67c" path="res://Buildings/Stand/stand_preview.tscn" id="2_oj7m4"]
+
+[resource]
+script = ExtResource("2_nm7tn")
+name = "Stand"
+dimension = Vector2i(1, 1)
+build_object = ExtResource("1_s7gdx")
+build_preview = ExtResource("2_oj7m4")
+metadata/_custom_type_script = "uid://c2j4nn22v54ms"

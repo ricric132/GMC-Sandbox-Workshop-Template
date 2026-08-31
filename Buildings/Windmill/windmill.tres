@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="building_template" format=3 uid="uid://cxq2c5mtpmg58"]
+
+[ext_resource type="PackedScene" uid="uid://b3um85wd37k3r" path="res://Buildings/Windmill/windmill.tscn" id="1_esl4q"]
+[ext_resource type="Script" uid="uid://c2j4nn22v54ms" path="res://building_template.gd" id="2_gi17t"]
+[ext_resource type="PackedScene" uid="uid://x454rrame6fo" path="res://Buildings/Windmill/windmill_preview.tscn" id="2_iuosk"]
+
+[resource]
+script = ExtResource("2_gi17t")
+name = "Windmill"
+dimension = Vector2i(5, 4)
+build_object = ExtResource("1_esl4q")
+build_preview = ExtResource("2_iuosk")
+metadata/_custom_type_script = "uid://c2j4nn22v54ms"

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c7pg81ar0drhw"]
+
+[ext_resource type="Script" uid="uid://b73bu6lxag816" path="res://building_select_button.gd" id="1_2kp0i"]
+
+[node name="Button" type="Button" unique_id=1823236668]
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2kp0i")
+
+[connection signal="button_down" from="." to="." method="clicked"]

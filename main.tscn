@@ -1,47 +1,73 @@
-[gd_scene format=3 uid="uid://cjom6frcsnwo3"]
+[gd_scene format=3 uid="uid://ct3x83vg5y5jm"]
 
-[ext_resource type="Script" uid="uid://dj6ntwbt01d7n" path="res://building_manager.gd" id="1_ig7tw"]
-[ext_resource type="Resource" uid="uid://c5ngv8gp463gr" path="res://House/House.tres" id="2_0xm2m"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ieq10"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ieq10"]
+[ext_resource type="Script" uid="uid://carb7fxejnni7" path="res://building_manager.gd" id="1_uu6xs"]
+[ext_resource type="Resource" uid="uid://bk1hvtqcesgc5" path="res://Buildings/House/House.tres" id="2_r0du0"]
+[ext_resource type="Script" uid="uid://cqcm5y0lhlqk8" path="res://camera_controller.gd" id="2_uu6xs"]
+[ext_resource type="Script" uid="uid://c2j4nn22v54ms" path="res://building_template.gd" id="3_3dxm6"]
+[ext_resource type="Resource" uid="uid://dig8tt5470jjn" path="res://Buildings/Stand/stand.tres" id="4_lgr22"]
+[ext_resource type="Resource" uid="uid://cxq2c5mtpmg58" path="res://Buildings/Windmill/windmill.tres" id="5_trn2v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mfvo"]
-albedo_color = Color(0.85626125, 0, 0.14309767, 1)
+albedo_color = Color(0.6888781, 0.05533915, 0.14458513, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_ieq10"]
 material = SubResource("StandardMaterial3D_6mfvo")
 
-[node name="Node3D" type="Node3D" unique_id=1898332623]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ieq10"]
 
-[node name="Floor" type="Node3D" parent="." unique_id=1346193798]
-transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3dxm6"]
+albedo_color = Color(0.29996738, 0.5528155, 0.2697442, 1)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=517115187]
+[sub_resource type="BoxMesh" id="BoxMesh_ieq10"]
+material = SubResource("StandardMaterial3D_3dxm6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=2088395410]
-shape = SubResource("BoxShape3D_ieq10")
+[node name="Node3D" type="Node3D" unique_id=1877689242]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1697124571]
-mesh = SubResource("BoxMesh_ieq10")
+[node name="PreviewParent" type="Node3D" parent="." unique_id=1417009003]
 
-[node name="Corner" type="Node3D" parent="Floor" unique_id=1195548554]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.5)
-
-[node name="BuildingManager" type="Node3D" parent="." unique_id=1381809741]
-script = ExtResource("1_ig7tw")
-selected_building = ExtResource("2_0xm2m")
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1629793288]
-transform = Transform3D(1, 0, 0, 0, 0.72627497, 0.68740433, 0, -0.68740433, 0.72627497, -2.1610198, 10.198151, 14.727161)
-
-[node name="Preview" type="Node3D" parent="." unique_id=762082281]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=793491283]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PreviewParent" unique_id=1619462487]
 mesh = SubResource("SphereMesh_ieq10")
 
-[node name="BuildingParent" type="Node3D" parent="." unique_id=513960177]
+[node name="Grid" type="Node3D" parent="." unique_id=1711979115]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1263889225]
-transform = Transform3D(0.835241, 0.549884, 0, -0.4025308, 0.6114203, 0.68127394, 0.37462166, -0.56902796, 0.73202854, 0, 11.225536, 0)
+[node name="Floor" type="Node3D" parent="Grid" unique_id=715704776]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, -15.327191, 0, 15.525547)
+
+[node name="Area3D" type="StaticBody3D" parent="Grid/Floor" unique_id=1138317085]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grid/Floor/Area3D" unique_id=1013601842]
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
+shape = SubResource("BoxShape3D_ieq10")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grid/Floor" unique_id=381677329]
+mesh = SubResource("BoxMesh_ieq10")
+
+[node name="GridCorner" type="Node3D" parent="Grid/Floor" unique_id=1496235224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.5)
+
+[node name="BuildingParent" type="Node3D" parent="Grid" unique_id=522585859]
+
+[node name="BuildingManager" type="Node3D" parent="." unique_id=19595411]
+script = ExtResource("1_uu6xs")
+selected_builidng = ExtResource("2_r0du0")
+all_buildings = Array[ExtResource("3_3dxm6")]([ExtResource("2_r0du0"), ExtResource("4_lgr22"), ExtResource("5_trn2v")])
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=85693517]
+transform = Transform3D(-0.1209461, 0.8845558, -0.4504809, 0, 0.45381227, 0.8910973, 0.9926591, 0.10777474, -0.05488683, -19.179245, 14.267918, 0.7531166)
+script = ExtResource("2_uu6xs")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=382104145]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=499856202]
+custom_minimum_size = Vector2(100, 1000)
+anchors_preset = -1
+anchor_right = 0.177
+anchor_bottom = 0.83000004
+offset_right = 38.095993
+offset_bottom = 104.15997
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1118545412]
+transform = Transform3D(1, 0, 0, 0, 0.47255072, 0.8813035, 0, -0.8813035, 0.47255072, 0, 5.574007, -0.1670742)
+light_color = Color(0.9986643, 0.703808, 0.54965323, 1)
+light_energy = 2.267
+shadow_enabled = true

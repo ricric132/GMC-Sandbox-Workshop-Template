@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ioo51co71xpx"]
+
+[ext_resource type="PackedScene" uid="uid://c476wjrr08dbc" path="res://Buildings/Stand/Stand.glb" id="1_g8jmp"]
+
+[node name="Node3D" type="Node3D" unique_id=1043794834]
+
+[node name="Stand" parent="." unique_id=884115921 instance=ExtResource("1_g8jmp")]
