@@ -4,7 +4,7 @@ extends Node3D
 @onready var preview_parent: Node3D = $"../PreviewParent"
 @onready var grid_corner: Node3D = $"../Grid/Floor/GridCorner"
 @onready var building_parent: Node3D = $"../Grid/BuildingParent"
-@onready var button_container: VBoxContainer = $"../CanvasLayer/VBoxContainer"
+@onready var button_container: VBoxContainer = $"../CanvasLayer/BuildingButtons"
 
 var grid : Array[Array] = []
 const WIDTH = 30
