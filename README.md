@@ -185,3 +185,29 @@ building_manager.gd
 	else:
 		preview_parent.hide()
 ```
+# 5.Adding buttons to select buildings
+
+Look over the provided button_select_button.gd, which is attacthed to the button in building_selector.tscn
+```gdscript
+extends Button
+
+var build_template : BuildingTemplate
+var building_manager : Node
+
+#this will be called from the build_manager when the button is created
+func setup(building: BuildingTemplate, manager : Node):
+	build_template = building
+	text = building.name
+	building_manager = manager
+
+#this should be connected to the button pressed signal
+func clicked():
+	building_manager.select_building(build_template)
+
+```
+
+add a reference in building_manager.gd to the ui container that will hold all of the buttons
+```gdscript
+@onready var building_info_panel: Control = $"../CanvasLayer/BuildingInfoPanel"
+```
+
