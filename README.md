@@ -216,13 +216,78 @@ const button_scene := preload("res://building_selector.tscn") #fill with what yo
 @onready var button_container: VBoxContainer = $"../CanvasLayer/BuildingButtons" 
 ```
 
+In building_manager.gd
+- implement setup buttons function and call it in the _ready() function
 ```gdscript
+func _ready() -> void:
+	setup_grid()
+	setup_buttons() #add this
+
 func setup_buttons() -> void:
 	#loops through all buildings and creates a button for each
 	for building in all_buildings:
 		var button = button_scene.instantiate()
 		button_container.add_child(button)
 		button.setup(building, self)
+
+```
+
+In building_manager.gd 
+- select_building function that is called by the button script
+```gdscript
+func select_building(building : BuildingTemplate):
+	selected_building = building
+```
+
+Now you should be able to test it
+
+# 6. Adding building previews
+
+First take a look around the preview scenes eg.house_preview.tscn and the building_preview.gd script
+```gdscript
+extends Node3D
+
+@export var valid_preview : Node
+@export var invalid_preview : Node
+
+func toggle_preview(is_valid : bool):
+	valid_preview.visible = is_valid
+	invalid_preview.visible = !is_valid
+```
+
+In building_manager.gd 
+- Update the building_select function
+```gdscript
+func select_building(building : BuildingTemplate):
+	selected_building = building 
+
+	#add this
+	if(active_preview):
+		active_preview.queue_free()
+	
+	active_preview = building.build_preview.instantiate()
+	preview_parent.add_child(active_preview)
+```
+
+ - Update _physics_process in building_manager to show/hide the preview object
+
+```gdscript 
+	# Checks if the cursor is on the platform and a buildig  is selected
+	if(result && selected_building):
+		# shows the preview build
+		var coords : Vector2i = world_to_grid_coords(result.position)
+		preview_parent.position = grid_to_world_position(coords.x, coords.y, cur_rot)
+
+		#add this
+		preview_parent.show()
+		active_preview.toggle_preview(check_valid(coords.x, coords.y, selected_building))
+		
+		# if player presses we attempt to build
+		if Input.is_action_just_pressed("click"):
+			build(coords.x, coords.y, selected_building)
+#add this
+	else:
+		preview_parent.hide()
 
 ```
 
