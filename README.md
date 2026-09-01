@@ -291,5 +291,59 @@ func select_building(building : BuildingTemplate):
 
 ```
 
+Now previews should appear when you build and it should be red when invalid building location and blue when valid
+
+# 7. Adding rotations to the buildings
+
+In buidling_manager.gd add some variables that will be used for rotating:
+- rot_dir defines all the orientation directions the building can have
+- rot_offset helps realign the rotated building with the grid
+- rot_basis defines the 2 Vector2i for each rotation orentation that determines the direction the x-y dimensions of the building point
+- cur_rot defines the current selected rotation
+```gdscript
+enum rot_dir {FORWARD = 0, RIGHT = 1, BACK = 2, LEFT = 3}
+const rot_offset = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(1, 0)]
+#basis for determinining x and y directions after roatation of a building
+const rot_basis = [	[Vector2i(1, 0), Vector2i(0, 1)],
+					[Vector2i(0, -1), Vector2i(1, 0)],
+					[Vector2i(-1, 0), Vector2i(0, -1)],
+					[Vector2i(0, 1), Vector2i(-1, 0)]
+					]
+var cur_rot : rot_dir = rot_dir.FORWARD
+```
+
+
+- add a change_rot to cycle through the rotations
+```gdscript
+func change_rot():
+	cur_rot = (cur_rot+1)%4
+```
+- call the change rot function in physics_process when "rot" (currently binded to r) is pressed
+```gdscript
+if(Input.is_action_just_pressed("rot")):
+	change_rot()
+```
+- rotate the preview in _physics_process
+```gdscript
+#add this
+preview_parent.rotation_degrees = Vector3(0, cur_rot*90, 0)
+
+#existing lines
+preview_parent.show()
+active_preview.toggle_preview(check_valid(coords.x, coords.y, selected_building))
+```
+- edit grid_to_world_position function to allow for a rotation parameter (rotation has a default value as often we will not use the rotation)
+```gdscript
+func grid_to_world_position(x : int, y : int, rot : rot_dir = rot_dir.FORWARD) -> Vector3:
+	#offset the grid coordinates based off of rotation to recentre corner of building
+	var offsetted_coord = Vector3(x, 0, y) + Vector3(rot_offset[rot].x, 0 ,rot_offset[rot].y)
+	return grid_corner.global_position + offsetted_coord * TILE_SIZE
+```
+
+
+
+
+
+
 
 
