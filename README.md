@@ -206,8 +206,25 @@ func clicked():
 
 ```
 
-add a reference in building_manager.gd to the ui container that will hold all of the buttons
+In building_manager.gd 
+- add an export variable to store an array of all building, then fill it with all our building templates eg. house.tres in the inspector
+- add a reference to the button scene
+- add a reference to the ui container that will hold all of the buttons (be sure to drag the container node into the inspector box that @export creates)
 ```gdscript
-@onready var building_info_panel: Control = $"../CanvasLayer/BuildingInfoPanel"
+@export var all_buildings : Array[BuildingTemplate]
+const button_scene := preload("res://building_selector.tscn") #fill with what your path to building_selector.tscn is
+@onready var button_container: VBoxContainer = $"../CanvasLayer/BuildingButtons" 
 ```
+
+```gdscript
+func setup_buttons() -> void:
+	#loops through all buildings and creates a button for each
+	for building in all_buildings:
+		var button = button_scene.instantiate()
+		button_container.add_child(button)
+		button.setup(building, self)
+
+```
+
+
 
