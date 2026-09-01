@@ -332,6 +332,22 @@ preview_parent.rotation_degrees = Vector3(0, cur_rot*90, 0)
 preview_parent.show()
 active_preview.toggle_preview(check_valid(coords.x, coords.y, selected_building))
 ```
+
+- rotate the built object
+```gdscript
+# spawns in the building
+var built : Node = building.build_object.instantiate()
+building_parent.add_child(built)
+built.global_position = grid_to_world_position(x, y)
+
+built.rotation_degrees = Vector3(0, cur_rot*90, 0)  #add this line
+
+built.building_manager = self
+built.template = building
+```
+
+- now if you test this, you will see that by pressing "r" the object will rotate but it will not be placed on the square that the cursour is hovering and the validity of placments will no longer be enforced properly. This is because when we rotate the buildings the origin point of the building needs to change and the direction in which we check validity will also be different, as the building will be pointed in a different direction.
+
 - edit grid_to_world_position function to allow for a rotation parameter (rotation has a default value as often we will not use the rotation)
 ```gdscript
 func grid_to_world_position(x : int, y : int, rot : rot_dir = rot_dir.FORWARD) -> Vector3:
@@ -340,10 +356,136 @@ func grid_to_world_position(x : int, y : int, rot : rot_dir = rot_dir.FORWARD) -
 	return grid_corner.global_position + offsetted_coord * TILE_SIZE
 ```
 
+- edit the grid_to_world_position function calls to use the new rot parameter
+- in _physics_process
+```gdscript
+# shows the preview build
+var coords : Vector2i = world_to_grid_coords(result.position)
+preview_parent.position = grid_to_world_position(coords.x, coords.y, cur_rot)
+```
+- and in build function
+```gdscript
+# spawns in the building
+var built : Node = building.build_object.instantiate()
+building_parent.add_child(built)
+
+built.global_position = grid_to_world_position(x, y, cur_rot) # edit this line
+
+built.rotation_degrees = Vector3(0, cur_rot*90, 0)
+built.building_manager = self
+built.template = building
+```
+
+- edit build function and check valid function check_coord variable to account for the new direction the building is pointed. Replace the original check_coord with this
+```gdscript
+var check_coord : Vector2i = Vector2i(x, y)
+
+# uses our basis to which direction the x and y of
+# the building face
+check_coord += rot_basis[cur_rot][0] * i
+check_coord += rot_basis[cur_rot][1] * j
+```
+
+-now the rotations should work
 
 
+# 8. Selecting/Deleting buildings
+- now we will move onto adding functionality to select and delete buildings
+
+- first we can navigate to the building.gd script attatched to each building (when we want to implement individual functions and have each building do thier own things we would probably turn building into a superclass and give each building thier own script that inherits from building)
+- now we want to fill the building.gd script out
+```gdscript
+extends Node
+class_name Building
+
+@onready var highlight: MeshInstance3D = $Highlight
+
+var template : BuildingTemplate
+var building_manager : Node
+var occupied_tiles : Array[Vector2i] = []
+
+func update_highlight():
+	if building_manager.highlighted_building == self:
+		highlight.show()
+	else:
+		highlight.hide()
+
+func building_selected():
+	building_manager.highlight_building(self)
 
 
+func _on_static_body_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			building_selected()
+```
 
 
+- then we want to implement the highlight_building function in building_manager.gd
+- we also need to add the relevant variables to the script. building_info_panel is a UI object in the scene that will display some building info and the delete button.
+```gdscript
+@onready var building_info_panel: Control = $"../CanvasLayer/BuildingInfoPanel"
+var highlighted_building
 
+func highlight_building(building: Node):	
+	highlighted_building = building
+	building_info_panel.setup(building)
+	highlight_changed.emit()
+```
+
+- edit _physics_process in building_manager.gd, so that the building_info_panel is toggled depending on if there is a highlighted building
+```gdscript
+func _physics_process(delta: float) -> void:
+	if(highlighted_building):
+		building_info_panel.show()
+	else:
+		building_info_panel.hide()
+```
+
+- take a look at the building_info_panel scene and script
+```gdscript
+extends Control
+
+@onready var building_name: Label = $BuildingName
+@onready var building_manager: Node3D = $"../../BuildingManager"
+
+func setup(building : Node):
+	building_name.text = building.template.name
+
+
+func _on_button_pressed() -> void:
+	building_manager.delete_building()
+```
+
+-implement building_manager.gd delete building function
+```gdscript
+func delete_building():
+	if(highlighted_building):
+		for coord in highlighted_building.occupied_tiles:
+			grid[coord.x][coord.y].building = null
+		highlighted_building.queue_free()
+		highlighted_building = null
+```
+
+- we can now test, but now its annoying to buidl and select at the same time so lets implement a toggle for buiding and selecting mode
+
+- add toggle_buildmode function to building_manager.gd and create a ui button and connect the pressed signal to the toggle_buildmode function
+```gdscript
+var is_building = false
+
+func toggle_buildmode():
+	is_building = !is_building
+	button_container.visible = is_building
+	highlighted_building = null
+```
+
+- now adjust the _physics_process
+```gdscript
+if(result && selected_building && is_building): #edit this line
+```
+- and add an is_building check to the highlight_building function
+```gdscript
+func highlight_building(building: Node):
+	if(is_building):
+		return
+```
