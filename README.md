@@ -389,7 +389,7 @@ check_coord += rot_basis[cur_rot][1] * j
 -now the rotations should work
 
 
-# 8. Selecting/Deleting buildings
+# 8. Selecting/deleting buildings
 - now we will move onto adding functionality to select and delete buildings
 
 - first we can navigate to the building.gd script attatched to each building (when we want to implement individual functions and have each building do thier own things we would probably turn building into a superclass and give each building thier own script that inherits from building)
@@ -489,3 +489,32 @@ func highlight_building(building: Node):
 	if(is_building):
 		return
 ```
+You can now run it and test out the new selecting and deleting system
+
+
+# 9.Possible extensions
+
+So now that we have the basics of a building system created, how might we expand on it?
+
+This section will talk about possible extensions and give some details on how we could approach them, feel free to try implement these if you are interested. If there are any questions or if you need help with implementation feel free to ask me (ricric on the GMC discord)
+
+## Importing as setting up your own 3d models for buildings:
+- Create your own 3d models in your software of choice eg.blender
+- Export as a .glb format (works best for godot but others should work) then just drag into your godot project
+- You can copy he setup of the existing buildings and replace visual with your new model then match up the size of the highlight and collision area to match (here make sure that bottem left corner of your model lines up with the origin (0, 0) which is the seen as the inte)
+
+## Turning the grid from a 2d grid to a 3d grid:
+This will allow for buildings to be stacked on top of eachother.
+This will be similiar to how Minecraft does its building system if you were consider all the blocks as individual buildings
+To implement this:
+- Add a z coordinate to Tile.gd
+- Turn the grid 2D array into a 3D array 
+- Adjust functions accordingly to account for the new dimensions this will include grid_to_world_position, world_to_grid_position, build and check_valid functions
+- then we would need to turn the building dimensions in building_template.gd into a Vector3i so that we can store a height
+- We would also make the camera raycast detect the buildings so that we can actually build ontop of buildings (do this by adding the collision layer of the buildings static_body to the layermask of the ray)
+
+
+
+
+
+
