@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b3um85wd37k3r"]
 
+[ext_resource type="Script" uid="uid://b18pynclqh2ae" path="res://building.gd" id="1_8weg6"]
 [ext_resource type="PackedScene" uid="uid://bxkfd7j5fk1s0" path="res://Buildings/Windmill/Windmill.glb" id="1_e18gu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4l01d"]
@@ -14,11 +15,13 @@ size = Vector3(5, 6, 4)
 size = Vector3(5, 6, 4)
 
 [node name="Windmill" type="Node3D" unique_id=949111744]
+script = ExtResource("1_8weg6")
 
 [node name="Visual" parent="." unique_id=838304361 instance=ExtResource("1_e18gu")]
 
 [node name="Highlight" type="MeshInstance3D" parent="." unique_id=1080749247]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3, 2)
+visible = false
 mesh = SubResource("BoxMesh_8weg6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=303856447]
@@ -27,3 +30,5 @@ collision_layer = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2045866343]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3, 2)
 shape = SubResource("BoxShape3D_8weg6")
+
+[connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]

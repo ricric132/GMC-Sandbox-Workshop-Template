@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bhg5kgwn52ey8"]
 
 [ext_resource type="PackedScene" uid="uid://3km6i0bi4d85" path="res://Buildings/House/House.glb" id="1_e18gu"]
+[ext_resource type="Script" uid="uid://b18pynclqh2ae" path="res://building.gd" id="1_wotqk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ieq10"]
 size = Vector3(5, 4, 4)
@@ -14,6 +15,7 @@ material = SubResource("StandardMaterial3D_6mfvo")
 size = Vector3(5, 4, 4)
 
 [node name="House" type="Node3D" unique_id=1171370071]
+script = ExtResource("1_wotqk")
 
 [node name="Visual" parent="." unique_id=436553867 instance=ExtResource("1_e18gu")]
 
@@ -28,3 +30,5 @@ shape = SubResource("BoxShape3D_ieq10")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, 2)
 visible = false
 mesh = SubResource("BoxMesh_ieq10")
+
+[connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]

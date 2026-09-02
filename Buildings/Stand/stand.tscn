@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://ioo51co71xpx"]
 
+[ext_resource type="Script" uid="uid://b18pynclqh2ae" path="res://building.gd" id="1_7aera"]
 [ext_resource type="PackedScene" uid="uid://c476wjrr08dbc" path="res://Buildings/Stand/Stand.glb" id="1_g8jmp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mfvo"]
@@ -12,6 +13,7 @@ material = SubResource("StandardMaterial3D_6mfvo")
 [sub_resource type="BoxShape3D" id="BoxShape3D_7aera"]
 
 [node name="Stand" type="Node3D" unique_id=1043794834]
+script = ExtResource("1_7aera")
 
 [node name="Visual" parent="." unique_id=884115921 instance=ExtResource("1_g8jmp")]
 
@@ -26,3 +28,5 @@ collision_layer = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=101748980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
 shape = SubResource("BoxShape3D_7aera")
+
+[connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]
