@@ -519,6 +519,8 @@ To implement this:
 - then we would need to turn the building dimensions in building_template.gd into a Vector3i so that we can store a height
 - We would also make the camera raycast detect the buildings so that we can actually build ontop of buildings (do this by adding the collision layer of the buildings static_body to the layermask of the ray)
 
+## 
+
 
 
 
