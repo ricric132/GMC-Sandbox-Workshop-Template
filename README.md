@@ -501,7 +501,12 @@ This section will talk about possible extensions and give some details on how we
 ## Importing as setting up your own 3d models for buildings:
 - Create your own 3d models in your software of choice eg.blender
 - Export as a .glb format (works best for godot but others should work) then just drag into your godot project
-- You can copy he setup of the existing buildings and replace visual with your new model then match up the size of the highlight and collision area to match (here make sure that bottem left corner of your model lines up with the origin (0, 0) which is the seen as the inte)
+- You can copy he setup of the existing buildings and replace visual with your new model then match up the size of the highlight and collision area to match (here make sure that bottem left corner of your model lines up with the origin (0, 0) and is pointed in the right direction, see image for reference)
+<img width="1160" height="550" alt="image" src="https://github.com/user-attachments/assets/5ae47d04-29d3-4b03-866e-5883505f4453" />
+- Then for the preview create a copy of one of the existing preview scenes and replace the preview blue and preview red with the models you want for your valid preview and invalid preview (in the workshop we just used the same model but with the material fully blue/red) and add ensure it is also lined up with the origin.
+- Then fill in the inspector export variables for the preview by draggin in your models from the scene heirarchy 
+- Now create the building template custom resource and fill it in with your new scenes and set appropriate dimensions before adding it to the build_manager list of buildings 
+
 
 ## Turning the grid from a 2d grid to a 3d grid:
 This will allow for buildings to be stacked on top of eachother.
