@@ -519,7 +519,9 @@ To implement this:
 - then we would need to turn the building dimensions in building_template.gd into a Vector3i so that we can store a height
 - We would also make the camera raycast detect the buildings so that we can actually build ontop of buildings (do this by adding the collision layer of the buildings static_body to the layermask of the ray)
 
-## 
+## Moving the camera 
+With the current system we are not restricted to the topdown camera, for example we could create a first person cam for this game
+- create a first person character movement script and change the var mousePos = get_viewport().get_mouse_position() in building_manager.gd to a constant vector 2 for the centre of the scene and we can start building in first person using a crosshair on the centre of the screen
 
 
 
