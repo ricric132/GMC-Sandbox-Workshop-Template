@@ -467,7 +467,7 @@ func delete_building():
 		highlighted_building = null
 ```
 
-- we can now test, but now its annoying to buidl and select at the same time so lets implement a toggle for buiding and selecting mode
+- we can now test, but now its annoying to build and select at the same time so lets implement a toggle for buiding and selecting mode
 
 - add toggle_buildmode function to building_manager.gd and create a ui button and connect the pressed signal to the toggle_buildmode function
 ```gdscript
