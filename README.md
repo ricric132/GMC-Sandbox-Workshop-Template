@@ -393,7 +393,7 @@ check_coord += rot_basis[cur_rot][1] * j
 - now we will move onto adding functionality to select and delete buildings
 
 - first we can navigate to the building.gd script attatched to each building (when we want to implement individual functions and have each building do thier own things we would probably turn building into a superclass and give each building thier own script that inherits from building)
-- now we want to fill the building.gd script out
+- now we want to add some variables and functions to the building.gd script
 ```gdscript
 extends Node
 class_name Building
@@ -422,7 +422,7 @@ func _on_static_body_3d_input_event(camera: Node, event: InputEvent, event_posit
 
 
 - then we want to implement the highlight_building function in building_manager.gd
-- we also need to add the relevant variables to the script. building_info_panel is a UI object in the scene that will display some building info and the delete button.
+- we also need to add the relevant variables to the script. building_info_panel is a UI object in the scene that will display some building info and the delete button. 
 ```gdscript
 @onready var building_info_panel: Control = $"../CanvasLayer/BuildingInfoPanel"
 var highlighted_building
@@ -430,19 +430,9 @@ var highlighted_building
 func highlight_building(building: Node):	
 	highlighted_building = building
 	building_info_panel.setup(building)
-	highlight_changed.emit()
 ```
 
-- edit _physics_process in building_manager.gd, so that the building_info_panel is toggled depending on if there is a highlighted building
-```gdscript
-func _physics_process(delta: float) -> void:
-	if(highlighted_building):
-		building_info_panel.show()
-	else:
-		building_info_panel.hide()
-```
-
-- take a look at the building_info_panel scene and script
+- take a look at the building_info_panel scene and script, note the setup function that we call from out building_manager.gd is setting the text on the label to match the highlighted building's name (you can always add more to the setup function to display more info)
 ```gdscript
 extends Control
 
@@ -452,12 +442,22 @@ extends Control
 func setup(building : Node):
 	building_name.text = building.template.name
 
-
+#make sure this is connected to the pressed() signal of the button
 func _on_button_pressed() -> void:
 	building_manager.delete_building()
 ```
 
--implement building_manager.gd delete building function
+- edit _physics_process in building_manager.gd, so that the building_info_panel is visible depending on if there is a highlighted building
+```gdscript
+func _physics_process(delta: float) -> void:
+	if(highlighted_building):
+		building_info_panel.show()
+	else:
+		building_info_panel.hide()
+```
+
+- now you can test it, when you select a building the info_panel should display its name however the delete button does not work yet because its trying to call delete_building() function in building_manager.gd but it doesnt exist yet
+- implement building_manager.gd delete building function
 ```gdscript
 func delete_building():
 	if(highlighted_building):
@@ -467,7 +467,7 @@ func delete_building():
 		highlighted_building = null
 ```
 
-- we can now test, but now its annoying to buidl and select at the same time so lets implement a toggle for buiding and selecting mode
+- we can now test, but now its annoying to build and select at the same time so lets implement a toggle for buiding and selecting mode
 
 - add toggle_buildmode function to building_manager.gd and create a ui button and connect the pressed signal to the toggle_buildmode function
 ```gdscript
@@ -519,7 +519,9 @@ To implement this:
 - then we would need to turn the building dimensions in building_template.gd into a Vector3i so that we can store a height
 - We would also make the camera raycast detect the buildings so that we can actually build ontop of buildings (do this by adding the collision layer of the buildings static_body to the layermask of the ray)
 
-## 
+## Moving the camera 
+With the current system we are not restricted to the topdown camera, for example we could create a first person cam for this game
+- create a first person character movement script and change the var mousePos = get_viewport().get_mouse_position() in building_manager.gd to a constant vector 2 for the centre of the scene and we can start building in first person using a crosshair on the centre of the screen
 
 
 
