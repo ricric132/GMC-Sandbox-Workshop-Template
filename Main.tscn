@@ -1,11 +1,6 @@
 [gd_scene format=3 uid="uid://ct3x83vg5y5jm"]
 
-[ext_resource type="Script" uid="uid://carb7fxejnni7" path="res://building_manager.gd" id="1_glv2v"]
-[ext_resource type="Resource" uid="uid://cxq2c5mtpmg58" path="res://Buildings/Windmill/windmill.tres" id="2_r0du0"]
 [ext_resource type="Script" uid="uid://cqcm5y0lhlqk8" path="res://camera_controller.gd" id="2_uu6xs"]
-[ext_resource type="Script" uid="uid://c2j4nn22v54ms" path="res://building_template.gd" id="3_fos0i"]
-[ext_resource type="Resource" uid="uid://dig8tt5470jjn" path="res://Buildings/Stand/stand.tres" id="4_3dxm6"]
-[ext_resource type="Resource" uid="uid://06gunfwlb5fk" path="res://Buildings/House/House.tres" id="5_3dxm6"]
 [ext_resource type="PackedScene" uid="uid://okaudtfqkf41" path="res://building_info_panel.tscn" id="7_lgr22"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mfvo"]
@@ -49,8 +44,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.5)
 [node name="BuildingParent" type="Node3D" parent="Grid" unique_id=522585859]
 
 [node name="BuildingManager" type="Node3D" parent="." unique_id=19595411]
-script = ExtResource("1_glv2v")
-all_buildings = Array[ExtResource("3_fos0i")]([ExtResource("2_r0du0"), ExtResource("4_3dxm6"), ExtResource("5_3dxm6")])
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=85693517]
 transform = Transform3D(-0.1209461, 0.8845558, -0.4504809, 0, 0.45381227, 0.8910973, 0.9926591, 0.10777474, -0.05488683, -19.179245, 14.267918, 0.7531166)
